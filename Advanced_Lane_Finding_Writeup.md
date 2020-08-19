@@ -42,12 +42,37 @@ Example chessboard image: /output_images/cal_undistorted.jpg
    Gradients are obtained by getting sobel in both x- and y-axes. Then, combining them together by finding  their absolute value and directions
    Color threshold is done in 'S' channel of HLS coding
 * Apply a perspective transform to rectify binary image ("birds-eye view") (Example image: /output_images/straight_lines1_warped.jpg)
+
    y_bottom = 720 
+   
    y_top = 450 
+   
    src_x1 = 240
+   
    zoom_out_factor = 0.55
+   
    dest_x1 = src_x1 + (src_x2 - src_x1) * (1- zoom_out_factor) / 2 
+   
    dest_x2 = src_x2 - (src_x2 - src_x1) * (1- zoom_out_factor) / 2
 * Detect lane pixels using histograms and fit a curve using sliding windows technique. (Example image: /output_images/straight_lines1_windows.jpg)
    The first step  to split the histogram into two sides, one for each lane line
    The next step is to set a few hyperparameters related to our sliding windows, and set them up to iterate across the binary activations in the image.
+   
+ ### Lane Finding Pipeline for Videos
+ (Output video: /output_images/project_video.mp4)
+ 
+ * Lane class created to save characteristics of the left and right lane detections
+ * Extract the very first frame and apply "Lane Finding Pipeline for Images" to it in order to get first lane polynomials using window technique
+ * Then, in a loop, access every frame of the video. For each,
+ * Apply distortion correction 
+ * Obtain the binary threshold image 
+ * Transform the binary threshold to bird's eye view
+ * Detect lanes and fit polynomials  based  the former polynomial with to defining a search range (+/- 50 pixels)
+ * Transform back the binary threshold to original view
+ * Measure curvature and distances in metric systen
+ 
+ ### Discussion
+ * The system would crash if it does not find lanes in the very first frame
+ * The system would crash if there is extreme weather conditions such as snow and fog.
+ * The system may crash in hard turns
+ * The system may crash in bad lightning and different shadings
