@@ -33,4 +33,12 @@ Using these two lists of points, OpenCV's calibrateCamera function calculates tw
 
 Using two calibration parameters, mtx and dist, I am able to correct distortions at the images (Function: undistort_image)
 
+Example chessboard image: /output_images/cal_undistorted.jpg
+
 ### Lane Finding Pipeline for Images
+
+* Apply distortion correction to the given image (Example image: /output_images/straight_lines1_undistorted.jpg). 
+* Obtain a binary threshold image resulting from gradients and color transforms (Example image: /output_images/straight_lines1_thresholded.jpg).
+   Gradients are obtained by getting sobel in both x- and y-axes. Then, combining them together by finding  their absolute value and directions
+   Color threshold is done in 'S' channel of HLS coding
+* 
