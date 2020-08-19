@@ -41,4 +41,13 @@ Example chessboard image: /output_images/cal_undistorted.jpg
 * Obtain a binary threshold image resulting from gradients and color transforms (Example image: /output_images/straight_lines1_thresholded.jpg).
    Gradients are obtained by getting sobel in both x- and y-axes. Then, combining them together by finding  their absolute value and directions
    Color threshold is done in 'S' channel of HLS coding
-* 
+* Apply a perspective transform to rectify binary image ("birds-eye view") (Example image: /output_images/straight_lines1_warped.jpg)
+   y_bottom = 720 
+   y_top = 450 
+   src_x1 = 240
+   zoom_out_factor = 0.55
+   dest_x1 = src_x1 + (src_x2 - src_x1) * (1- zoom_out_factor) / 2 
+   dest_x2 = src_x2 - (src_x2 - src_x1) * (1- zoom_out_factor) / 2
+* Detect lane pixels using histograms and fit a curve using sliding windows technique. (Example image: /output_images/straight_lines1_windows.jpg)
+   The first step  to split the histogram into two sides, one for each lane line
+   The next step is to set a few hyperparameters related to our sliding windows, and set them up to iterate across the binary activations in the image.
